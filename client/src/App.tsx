@@ -1,9 +1,10 @@
-import { BrowserRouter, NavLink, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider, useCart } from './context/CartContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import AddressesPage from './pages/AddressesPage';
 import RegisterPage from './pages/RegisterPage';
 import RestaurantsPage from './pages/RestaurantsPage';
 import CartPage from './pages/CartPage';
@@ -15,6 +16,12 @@ function Shell() {
   const { user, loading, logout } = useAuth();
   const { itemCount } = useCart();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <div className="app-shell">
@@ -40,15 +47,25 @@ function Shell() {
           >
             Restaurants
           </NavLink>
-          <NavLink
-            to="/orders"
-            className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}
-          >
-            Orders
-          </NavLink>
-          <NavLink to="/cart" className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}>
-            Cart{itemCount > 0 ? ` (${itemCount})` : ''}
-          </NavLink>
+          {user ? (
+            <>
+              <NavLink
+                to="/orders"
+                className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}
+              >
+                Orders
+              </NavLink>
+              <NavLink
+                to="/addresses"
+                className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}
+              >
+                Addresses
+              </NavLink>
+              <NavLink to="/cart" className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}>
+                Cart{itemCount > 0 ? ` (${itemCount})` : ''}
+              </NavLink>
+            </>
+          ) : null}
         </nav>
 
         <div className="auth-actions">
@@ -57,7 +74,7 @@ function Shell() {
           ) : user ? (
             <>
               <span className="user-chip">Hi, {user.name.split(' ')[0]}</span>
-              <button type="button" className="button button--ghost" onClick={logout}>
+              <button type="button" className="button button--ghost" onClick={handleLogout}>
                 Logout
               </button>
             </>
@@ -93,6 +110,14 @@ function Shell() {
             element={
               <ProtectedRoute>
                 <OrdersPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/addresses"
+            element={
+              <ProtectedRoute>
+                <AddressesPage />
               </ProtectedRoute>
             }
           />

@@ -332,6 +332,13 @@
   align-items: start;
 }
 
+.address-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.05fr);
+  gap: 18px;
+  align-items: start;
+}
+
 .cart-item-controls {
   display: flex;
   justify-content: space-between;
@@ -376,6 +383,62 @@
   padding-top: 10px;
   border-top: 1px solid rgba(43, 29, 17, 0.08);
   color: var(--text);
+}
+
+.field-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.address-picker {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 22px;
+  background: rgba(255, 245, 238, 0.92);
+  border: 1px solid rgba(43, 29, 17, 0.08);
+}
+
+.address-picks {
+  display: grid;
+  gap: 10px;
+}
+
+.address-pick {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(43, 29, 17, 0.08);
+}
+
+.address-pick strong {
+  color: var(--text);
+}
+
+.address-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.checkbox-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 6px;
+  padding: 13px 15px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(43, 29, 17, 0.12);
+}
+
+.checkbox-row input {
+  width: auto;
+  margin: 0;
 }
 
 .copy-list,
@@ -674,7 +737,9 @@
   }
 
   .cart-layout,
-  .cart-fees {
+  .cart-fees,
+  .address-grid,
+  .address-form-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -710,5 +775,9 @@
 
   .quantity-stepper {
     justify-content: space-between;
+  }
+
+  .address-pick {
+    flex-direction: column;
   }
 }
