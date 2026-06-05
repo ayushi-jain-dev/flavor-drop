@@ -139,7 +139,11 @@ export default function RestaurantsPage() {
                       onClick={() => handleAddToCart(item.id)}
                       disabled={activeMenuItem === item.id}
                     >
-                      {cartQuantities.get(item.id) ? `Add more (${cartQuantities.get(item.id)})` : 'Add to cart'}
+                      {user
+                        ? cartQuantities.get(item.id)
+                          ? `Add more (${cartQuantities.get(item.id)})`
+                          : 'Add to cart'
+                        : 'Login to add'}
                     </button>
                   </div>
                 </li>

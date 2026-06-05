@@ -1,6 +1,12 @@
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import api from '../api/client';
 import { useCart } from '../context/CartContext';
+import type { Address } from '../types/address';
+
+type AddressesResponse = {
+  addresses: Address[];
+};
 
 export default function CartPage() {
   const navigate = useNavigate();
@@ -9,9 +15,46 @@ export default function CartPage() {
   const [notes, setNotes] = useState('');
   const [deliveryFee, setDeliveryFee] = useState('49');
   const [tax, setTax] = useState('18');
+  const [addresses, setAddresses] = useState<Address[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState('');
+  const [addressLoading, setAddressLoading] = useState(true);
   const [busyItemId, setBusyItemId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    let active = true;
+
+    const loadAddresses = async () => {
+      setAddressLoading(true);
+
+      try {
+        const { data } = await api.get<AddressesResponse>('/addresses');
+        if (!active) {
+          return;
+        }
+
+        setAddresses(data.addresses);
+        const defaultAddress = data.addresses.find((address) => address.isDefault) ?? data.addresses[0];
+        setSelectedAddressId(defaultAddress?.id ?? '');
+      } catch {
+        if (active) {
+          setAddresses([]);
+          setSelectedAddressId('');
+        }
+      } finally {
+        if (active) {
+          setAddressLoading(false);
+        }
+      }
+    };
+
+    void loadAddresses();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const parsedDeliveryFee = Number(deliveryFee) || 0;
   const parsedTax = Number(tax) || 0;
@@ -39,8 +82,15 @@ export default function CartPage() {
     setError('');
     setSubmitting(true);
 
+    if (!selectedAddressId) {
+      setError('Add and select a delivery address before placing the order.');
+      setSubmitting(false);
+      return;
+    }
+
     try {
       await checkout({
+        addressId: selectedAddressId,
         notes: notes.trim() || undefined,
         deliveryFee: parsedDeliveryFee,
         tax: parsedTax,
@@ -137,6 +187,46 @@ export default function CartPage() {
             <p className="hint">For now this checkout lets you add notes and set fee values for testing.</p>
 
             <form className="form" onSubmit={handleCheckout}>
+              <div className="address-picker">
+                <div className="form__meta">
+                  <span className="field-label">Delivery address</span>
+                  <Link to="/addresses" className="button--link">
+                    Manage addresses
+                  </Link>
+                </div>
+
+                {addressLoading ? <div className="page-status">Loading saved addresses...</div> : null}
+
+                {!addressLoading && addresses.length === 0 ? (
+                  <div className="page-status">
+                    Add a delivery address first. You need one to complete checkout.
+                  </div>
+                ) : null}
+
+                {!addressLoading && addresses.length > 0 ? (
+                  <div className="address-picks">
+                    {addresses.map((address) => (
+                      <label className="address-pick" key={address.id}>
+                        <input
+                          type="radio"
+                          name="delivery-address"
+                          checked={selectedAddressId === address.id}
+                          onChange={() => setSelectedAddressId(address.id)}
+                        />
+                        <span>
+                          <strong>{address.label ?? 'Saved address'}</strong>
+                          <br />
+                          {address.line1}
+                          {address.line2 ? `, ${address.line2}` : ''}
+                          <br />
+                          {address.city}, {address.state}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+
               <label className="field">
                 <span>Delivery notes</span>
                 <textarea
