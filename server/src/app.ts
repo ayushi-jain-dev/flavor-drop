@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import { env } from './config/env.js';
+import { cartRouter } from './routes/cart.js';
 import { authRouter } from './routes/auth.js';
 import { ordersRouter } from './routes/orders.js';
 import { restaurantsRouter } from './routes/restaurants.js';
@@ -23,6 +24,7 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api/auth', authRouter);
+app.use('/api/cart', cartRouter);
 app.use('/api/restaurants', restaurantsRouter);
 app.use('/api/orders', ordersRouter);
 

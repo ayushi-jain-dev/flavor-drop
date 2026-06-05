@@ -1,5 +1,6 @@
 import { BrowserRouter, NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { CartProvider, useCart } from './context/CartContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -12,6 +13,7 @@ import './App.css';
 
 function Shell() {
   const { user, loading, logout } = useAuth();
+  const { itemCount } = useCart();
   const location = useLocation();
 
   return (
@@ -45,7 +47,7 @@ function Shell() {
             Orders
           </NavLink>
           <NavLink to="/cart" className={({ isActive }) => `nav__link ${isActive ? 'is-active' : ''}`}>
-            Cart
+            Cart{itemCount > 0 ? ` (${itemCount})` : ''}
           </NavLink>
         </nav>
 
@@ -105,7 +107,9 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Shell />
+        <CartProvider>
+          <Shell />
+        </CartProvider>
       </BrowserRouter>
     </AuthProvider>
   );

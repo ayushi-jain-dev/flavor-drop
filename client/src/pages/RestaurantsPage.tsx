@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
+import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 import type { Restaurant } from '../types/catalog';
 
 type RestaurantsResponse = {
@@ -7,10 +10,15 @@ type RestaurantsResponse = {
 };
 
 export default function RestaurantsPage() {
+  const { user } = useAuth();
+  const { addItem, items } = useCart();
+  const navigate = useNavigate();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [query, setQuery] = useState('');
+  const [activeMenuItem, setActiveMenuItem] = useState<string | null>(null);
+  const [actionError, setActionError] = useState('');
 
   useEffect(() => {
     let active = true;
@@ -46,6 +54,26 @@ export default function RestaurantsPage() {
     return searchable.includes(query.toLowerCase());
   });
 
+  const cartQuantities = new Map(items.map((item) => [item.menuItemId, item.quantity] as const));
+
+  const handleAddToCart = async (menuItemId: string) => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
+    setActionError('');
+    setActiveMenuItem(menuItemId);
+
+    try {
+      await addItem(menuItemId, 1);
+    } catch (addError) {
+      setActionError(addError instanceof Error ? addError.message : 'Unable to add item');
+    } finally {
+      setActiveMenuItem(null);
+    }
+  };
+
   return (
     <section className="section">
       <div className="section__header">
@@ -67,6 +95,7 @@ export default function RestaurantsPage() {
 
       {loading ? <div className="page-status">Loading restaurants...</div> : null}
       {error ? <div className="page-status">{error}</div> : null}
+      {actionError ? <div className="page-status">{actionError}</div> : null}
 
       {!loading && !error && filteredRestaurants.length === 0 ? (
         <div className="empty-state">
@@ -102,7 +131,17 @@ export default function RestaurantsPage() {
                     <h4>{item.name}</h4>
                     <p>{item.description ?? 'Simple menu item you can expand later.'}</p>
                   </div>
-                  <span className="menu-item__price">₹{item.price.toFixed(2)}</span>
+                  <div style={{ display: 'grid', gap: 8, justifyItems: 'end' }}>
+                    <span className="menu-item__price">₹{item.price.toFixed(2)}</span>
+                    <button
+                      type="button"
+                      className="button button--ghost"
+                      onClick={() => handleAddToCart(item.id)}
+                      disabled={activeMenuItem === item.id}
+                    >
+                      {cartQuantities.get(item.id) ? `Add more (${cartQuantities.get(item.id)})` : 'Add to cart'}
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>
