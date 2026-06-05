@@ -1,0 +1,120 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - link "Go to home" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e6]: FD
+      - generic [ref=e7]:
+        - generic [ref=e8]: FlavorDrop
+        - generic [ref=e9]: React + TypeScript starter
+    - navigation "Primary" [ref=e10]:
+      - link "Home" [ref=e11] [cursor=pointer]:
+        - /url: /
+      - link "Restaurants" [ref=e12] [cursor=pointer]:
+        - /url: /restaurants
+    - generic [ref=e13]:
+      - link "Login" [ref=e14] [cursor=pointer]:
+        - /url: /login
+      - link "Create account" [ref=e15] [cursor=pointer]:
+        - /url: /register
+  - main [ref=e16]:
+    - generic [ref=e17]:
+      - generic [ref=e18]:
+        - generic [ref=e19]: Fresh food delivered fast
+        - heading "Hungry? Find something great and get it delivered." [level=1] [ref=e20]
+        - paragraph [ref=e21]: Browse restaurants, save your favorite delivery address, build your cart, and place an order in just a few taps. FlavorDrop is built to feel quick, simple, and satisfying from the first bite to the last.
+        - generic [ref=e22]:
+          - link "Explore restaurants" [ref=e23] [cursor=pointer]:
+            - /url: /restaurants
+          - link "Sign up" [ref=e24] [cursor=pointer]:
+            - /url: /register
+        - generic "App highlights" [ref=e25]:
+          - generic [ref=e26]:
+            - generic [ref=e27]: Local spots
+            - generic [ref=e28]: Restaurants you actually want to order from
+          - generic [ref=e29]:
+            - generic [ref=e30]: Fast checkout
+            - generic [ref=e31]: Add items, pick an address, place the order
+          - generic [ref=e32]:
+            - generic [ref=e33]: Order tracking
+            - generic [ref=e34]: See what is happening after you hit submit
+      - complementary [ref=e35]:
+        - generic [ref=e36]:
+          - article [ref=e37]:
+            - generic [ref=e38]: Quick delivery
+            - heading "Hot food, handled carefully and delivered while it still tastes fresh." [level=3] [ref=e39]
+            - paragraph [ref=e40]: Choose something fast for lunch, dinner, or a late-night craving and get it moving right away.
+          - article [ref=e41]:
+            - generic [ref=e42]: Top picks
+            - heading "Discover local favorites, comfort food, and healthier choices in one place." [level=3] [ref=e43]
+            - paragraph [ref=e44]: Browse a hand-picked selection of spots that feel right for whatever you are in the mood for.
+          - article [ref=e45]:
+            - generic [ref=e46]: Simple checkout
+            - heading "Save your address once, reorder easily, and keep the path to checkout short." [level=3] [ref=e47]
+            - paragraph [ref=e48]: The experience stays light and easy so you can focus on the meal instead of the form fields.
+    - generic [ref=e49]:
+      - generic [ref=e51]:
+        - heading "What people come here for" [level=2] [ref=e52]
+        - paragraph [ref=e53]: Easy meals, fast decisions, and a smoother way to order.
+      - generic [ref=e54]:
+        - article [ref=e55]:
+          - heading "Choose a restaurant" [level=2] [ref=e56]
+          - list [ref=e57]:
+            - listitem [ref=e58]:
+              - generic [ref=e60]:
+                - strong [ref=e61]: Search by craving
+                - text: whether it is pizza, biryani, noodles, or a fresh bowl.
+            - listitem [ref=e62]:
+              - generic [ref=e64]:
+                - strong [ref=e65]: Check the menu
+                - text: and see what is popular before you decide.
+            - listitem [ref=e66]:
+              - generic [ref=e68]:
+                - strong [ref=e69]: Pick what feels right
+                - text: for the mood, the budget, and the time of day.
+        - article [ref=e70]:
+          - heading "Build your meal" [level=2] [ref=e71]
+          - list [ref=e72]:
+            - listitem [ref=e73]:
+              - generic [ref=e75]:
+                - strong [ref=e76]: Add items to the cart
+                - text: and adjust the quantity as you go.
+            - listitem [ref=e77]:
+              - generic [ref=e79]:
+                - strong [ref=e80]: Save your address
+                - text: so checkout stays quick the next time.
+            - listitem [ref=e81]:
+              - generic [ref=e83]:
+                - strong [ref=e84]: Review the total
+                - text: before you place the order.
+        - article [ref=e85]:
+          - heading "Track the delivery" [level=2] [ref=e86]
+          - list [ref=e87]:
+            - listitem [ref=e88]:
+              - generic [ref=e90]:
+                - strong [ref=e91]: Watch status updates
+                - text: as your food moves from confirmed to delivered.
+            - listitem [ref=e92]:
+              - generic [ref=e94]:
+                - strong [ref=e95]: Keep orders in one place
+                - text: so you can reorder the things you loved.
+            - listitem [ref=e96]:
+              - generic [ref=e98]:
+                - strong [ref=e99]: Enjoy the meal
+                - text: without worrying about the backend work behind it.
+    - generic [ref=e100]:
+      - generic [ref=e102]:
+        - heading "Popular right now" [level=2] [ref=e103]
+        - paragraph [ref=e104]: A few tasty ideas to get you started.
+      - generic [ref=e105]:
+        - article [ref=e106]:
+          - text: Comfort food
+          - heading "Pizza nights" [level=2] [ref=e107]
+          - paragraph [ref=e108]: Cheesy, crisp, and perfect for sharing.
+        - article [ref=e109]:
+          - text: Lighter options
+          - heading "Healthy bowls" [level=2] [ref=e110]
+          - paragraph [ref=e111]: Fresh, colorful, and packed with flavor.
+        - article [ref=e112]:
+          - text: Best sellers
+          - heading "Weekend treats" [level=2] [ref=e113]
+          - paragraph [ref=e114]: Indulgent dishes for when you want something special.
